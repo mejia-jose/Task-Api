@@ -1,4 +1,4 @@
-import { UserMessages } from "../../../shared/constants/messages";
+import { UserEntity } from "../../domain/entities/user.entity";
 import { IUserRepository } from "../../domain/ports/user.repository.interface";
 
 export class CreateUserUseCase
@@ -7,5 +7,18 @@ export class CreateUserUseCase
     constructor(private readonly userRepository: IUserRepository){}
 
     /** Permite ejecutar el caso de uso de crear usuario **/
-    async execute(user:any){}
+    async execute(email:string): Promise<UserEntity>
+    {
+       /** Se consulta el usuario, si existe se retorna **/
+       const existingUser = await this.userRepository.getUserByEmail(email);
+       if(existingUser)
+       {
+         return existingUser;
+       }
+
+       /** Se crea el usuario **/
+       const newUser = UserEntity.create(email);
+       await this.userRepository.save(newUser);
+       return newUser;
+    }
 }

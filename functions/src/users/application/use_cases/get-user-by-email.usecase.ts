@@ -1,4 +1,3 @@
-import { UserMessages } from "../../../shared/constants/messages";
 import { IUserRepository } from "../../domain/ports/user.repository.interface";
 
 export class GetUserByEmailUseCase
@@ -7,5 +6,13 @@ export class GetUserByEmailUseCase
     constructor(private readonly userRepository: IUserRepository){}
 
     /** Permite ejecutar el caso de uso para obtener la información de un usuario **/
-    async execute(user:any){}
+    async execute(email:string)
+    {
+        /** Se consulta si el usuario existe **/
+        const existingUser = await this.userRepository.getUserByEmail(email);
+        if(!existingUser) 
+            return null;
+        
+        return existingUser;
+    }
 }

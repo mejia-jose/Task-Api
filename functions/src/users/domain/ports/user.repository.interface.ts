@@ -4,5 +4,5 @@ import { UserEntity } from "../entities/user.entity";
 export interface IUserRepository
 {
     save(user:UserEntity):Promise<UserEntity>;
-    getUserByEmail(email:string):Promise<void>;
+    getUserByEmail(email:string):Promise<UserEntity | null>;
 }
