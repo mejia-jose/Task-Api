@@ -13,7 +13,7 @@ export class UserController
     )
     {}
 
-    /** Consultar usuario **/
+    /** Permite delegar al caso de uso de buscar usuarios y retornar la respuesta **/
     async findUser(req: Request, res: Response, next: NextFunction)
     {
         try
