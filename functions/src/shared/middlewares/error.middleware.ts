@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { MapResponse } from "../../../../shared/responses/response";
+import { MapResponse } from "../responses/response";
 
 export function captureGeneralError(error: any, req:Request, res: Response, next: NextFunction)
 {

@@ -1,7 +1,7 @@
 import { Router } from "express";
 
 import { UserController } from "../controllers/user.controller";
-import { validateData } from "../middlewares/validate.middleware";
+import { validateData } from "../../../../shared/middlewares/validate.middleware";
 import { UserEmailSchema } from "../schemas/user.schemas";
 
 /** Se definen las rutas del controlador de usuarios, para exponerlas **/

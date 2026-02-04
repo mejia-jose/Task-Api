@@ -7,7 +7,7 @@ import { CreateUserUseCase } from "./users/application/use_cases/create-user.use
 import { GetUserByEmailUseCase } from "./users/application/use_cases/get-user-by-email.usecase";
 import { UserController } from "./users/adapters/web/controllers/user.controller";
 import { userRouter } from "./users/adapters/web/routes/user.routes";
-import { captureGeneralError } from "../src/users/adapters/web/middlewares/error.middleware";
+import { captureGeneralError } from "./shared/middlewares/error.middleware";
 
 const app = express()
 app.use(cors());

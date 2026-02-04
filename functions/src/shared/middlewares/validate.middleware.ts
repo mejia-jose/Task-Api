@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import { ObjectSchema } from "joi";
 
-import { UserMessages } from "../../../../shared/constants/messages";
-import { MapResponse } from "../../../../shared/responses/response";
+import { UserMessages } from "../constants/messages";
+import { MapResponse } from "../responses/response";
 
 /** Permite validar los campos de entrada **/
 export const validateData = (schema: ObjectSchema) =>
