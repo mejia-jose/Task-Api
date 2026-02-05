@@ -10,6 +10,7 @@ import { CreateTasksUseCase } from "./tasks/application/use_cases/create-tasks.u
 import { GetAllTasksUseCase } from "./tasks/application/use_cases/get-all-tasks.usecase";
 import { UpdateTasksUseCase } from "./tasks/application/use_cases/update-tasks.usecase";
 import { MarkTaskCompletedUseCase } from "./tasks/application/use_cases/mark-task-completed.usecase";
+import { CancelTaskUseCase } from "./tasks/application/use_cases/cancel-tasks.usecase";
 import { UserController } from "./users/adapters/web/controllers/user.controller";
 import { TasksController } from "./tasks/adapters/web/controllers/tasks.controller";
 import { userRouter } from "./users/adapters/web/routes/user.routes";
@@ -42,9 +43,16 @@ const createTasksUseCase = new CreateTasksUseCase(tasksRepository);
 const getAllTasksUseCase = new GetAllTasksUseCase(tasksRepository);
 const updateTasksUseCase = new UpdateTasksUseCase(tasksRepository);
 const markTaskCompletedUseCase = new MarkTaskCompletedUseCase(tasksRepository);
+const cancelTaskUseCase = new CancelTaskUseCase(tasksRepository);
 
 /** Se instancia el controllador de User y se le inyectan los casos de uso**/
-const tasksController = new TasksController(createTasksUseCase,getAllTasksUseCase,updateTasksUseCase,markTaskCompletedUseCase);
+const tasksController = new TasksController(
+  createTasksUseCase,
+  getAllTasksUseCase,
+  updateTasksUseCase,
+  markTaskCompletedUseCase,
+  cancelTaskUseCase
+);
 
 /** Se intancian las rutas para hacer uso del controller de usuarios**/
 const tasksRoutes = taskRouter(tasksController);

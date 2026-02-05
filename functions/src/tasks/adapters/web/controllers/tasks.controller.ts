@@ -1,9 +1,11 @@
 import { Request, Response, NextFunction } from "express";
 
+import { TasksEntity } from "../../../domain/entities/tasks.entity";
 import { CreateTasksUseCase } from "../../../application/use_cases/create-tasks.usecase";
 import { GetAllTasksUseCase } from "../../../application/use_cases/get-all-tasks.usecase";
 import { MarkTaskCompletedUseCase } from "../../../application/use_cases/mark-task-completed.usecase";
 import { UpdateTasksUseCase } from "../../../application/use_cases/update-tasks.usecase";
+import { CancelTaskUseCase } from "../../../application/use_cases/cancel-tasks.usecase";
 import { TaskMessages } from "../../../../shared/constants/messages";
 import { MapResponse } from "../../../../shared/responses/response";
 
@@ -14,6 +16,7 @@ export class TasksController
         private getAllTasksUseCase: GetAllTasksUseCase,
         private updateTasksUseCase: UpdateTasksUseCase,
         private markTaskCompletedUseCase: MarkTaskCompletedUseCase,
+        private cancelTaskUseCase: CancelTaskUseCase,
     )
     {}
 
@@ -83,19 +86,34 @@ export class TasksController
         }
     }
 
-    /** Permite delegar al caso de uso de actualizar el estado de una tarea y retornar la respuesta */
+    /** Permite delegar al caso de uso de actualizar el estado de una tarea a completada y retornar la respuesta */
     async completeTasks(req: Request, res: Response, next: NextFunction)
+    {
+        return await this.updateStatus(req, res, next,this.markTaskCompletedUseCase, TaskMessages.SUCCESS.TASK_UPDATED);
+    }
+
+    /** Permite delegar al caso de uso de actualizar el estado de una tarea a cancelada y retornar la respuesta */
+    async cancelTasks(req: Request, res: Response, next: NextFunction)
+    {
+        return await this.updateStatus(req, res, next,this.cancelTaskUseCase,TaskMessages.SUCCESS.TASK_CANCELLED);
+    }
+
+    private async updateStatus(req: Request, 
+        res: Response, 
+        next: NextFunction,
+        useCase: { execute: (taskId: string) => Promise<TasksEntity> },
+        messages: string)
     {
         try 
         {
             const { taskId } = req.params as { taskId: string};
 
-            const updateStatus = await this.markTaskCompletedUseCase.execute(taskId);
+            const updateStatus = await useCase.execute(taskId);
 
             return res.status(200).json(
                 MapResponse.ResultJson({
                     type: true,
-                    messages: TaskMessages.SUCCESS.TASK_UPDATED,
+                    messages,
                     data: updateStatus
                 })
             );

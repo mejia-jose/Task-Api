@@ -21,7 +21,7 @@ export const TaskMessages =
     LIST_TASKS: 'Listado de tareas obtenido correctamente.',
     TASK_UPDATED: 'La tarea ha sido actualizada correctamente.',
     TASK_DELETED: 'La tarea ha sido eliminada correctamente.',
-    TASK_CANCELLED: 'La tarea ha sido cancelada correctamente.',
+    TASK_CANCELLED: 'La tarea ha sido eliminada correctamente.',
     TASK_COMPLETED: 'La tarea ha sido marcada como completada.',
   },
   ERROR: {
