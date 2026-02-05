@@ -7,8 +7,8 @@ export class GetAllTaskUseCase
     constructor(private readonly taskRepository: ITaskRepository){}
     
     /** Permite ejecutar el caso de uso de obtener las tareas asociadas a un usuario **/
-    async execute(task:TaskEntity): Promise<TaskEntity>
+    async execute(userId:string): Promise<TaskEntity[]>
     {
-       
+       return await this.taskRepository.getAllByUser(userId);
     }
 }
