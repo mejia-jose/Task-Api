@@ -11,13 +11,12 @@ export class TaskEntity
         public status: TaskStatus,
         public readonly userId: string,
         public createdAt: Date,
-        private updateAt: Date
+        public updatedAt: Date,
+        public deleteaAt: Date | null = null,
     ){}
 
     static create(title: string, description: string, userId: string): TaskEntity
     {
-        const currentDate = new Date();
-
         return (
             new TaskEntity(
                 uuidv4(),
@@ -25,22 +24,30 @@ export class TaskEntity
                 description,
                 TaskStatus.PENDING,
                 userId,
-                currentDate,
-                currentDate
+                TaskEntity.getDate(),
+                TaskEntity.getDate(),
+                null
             )
         )
+    }
+
+    protected static getDate(): Date
+    {
+       return new Date();
     }
 
     update(title: string, description: string): void
     {
         this.title = title;
         this.description = description;
-        this.updateAt = new Date();
+        this.updatedAt = TaskEntity.getDate();
     }
 
     updateStatus(status: TaskStatus): void
     {
+        const currentDate = TaskEntity.getDate();
         this.status = status;
-        this.updateAt = new Date();
+        this.updatedAt = currentDate;
+        this.deleteaAt = currentDate;
     }
 }
