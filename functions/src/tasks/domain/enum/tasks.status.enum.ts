@@ -1,4 +1,4 @@
-export enum TaskStatus
+export enum  TaskStatus
 {
     PENDING = 'Pendiente',
     COMPLETED = 'Completada',

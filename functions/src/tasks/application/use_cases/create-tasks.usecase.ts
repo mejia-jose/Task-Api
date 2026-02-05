@@ -1,17 +1,17 @@
-import { TaskEntity } from "../../domain/entities/task.entity";
-import { ITaskRepository } from "../../domain/ports/task.repository.interface";
-import { CreateTaskDTO } from "../dtos/task.dto";
+import { TasksEntity } from "../../domain/entities/tasks.entity";
+import { ITasksRepository } from "../../domain/ports/tasks.repository.interface";
+import { CreateTaskDTO } from "../dtos/tasks.dto";
 
-export class CreateTaskUseCae
+export class CreateTasksUseCae
 {
     /** Se inyecta la interfaz del repositorio de task(tareas) **/
-    constructor(private readonly taskRepository: ITaskRepository){}
+    constructor(private readonly taskRepository: ITasksRepository){}
     
     /** Permite ejecutar el caso de uso de crear una tarea **/
-    async execute(task:CreateTaskDTO): Promise<TaskEntity>
+    async execute(task:CreateTaskDTO): Promise<TasksEntity>
     {
         /** Se instancia la nueva clase para la nueva tarea **/
-        const newTask = TaskEntity.create(
+        const newTask = TasksEntity.create(
             task.title,
             task.description,
             task.userId

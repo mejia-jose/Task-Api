@@ -1,10 +1,10 @@
 import { firestore } from "firebase-admin";
 
-import { TaskEntity } from "../../domain/entities/task.entity";
-import { ITaskRepository } from "../../domain/ports/task.repository.interface";
-import { TaskStatus } from "../../domain/enum/task.status.enum";
+import { TasksEntity } from "../../domain/entities/tasks.entity";
+import { ITasksRepository } from "../../domain/ports/tasks.repository.interface";
+import { TaskStatus } from "../../domain/enum/tasks.status.enum";
 
-export class FirestoreTaskRepository implements ITaskRepository
+export class FirestoreTasksRepository implements ITasksRepository
 {
     private readonly collection;
     constructor(private readonly db: firestore.Firestore)
@@ -13,7 +13,7 @@ export class FirestoreTaskRepository implements ITaskRepository
     }
     
     /**Permite obtener todas las tareas de un usuario  **/
-    async getAllByUser(userId: string): Promise<TaskEntity[]>
+    async getAllByUser(userId: string): Promise<TasksEntity[]>
     {
         const dataCollection = await this.collection
         .where('userId', '==', userId)
@@ -27,7 +27,7 @@ export class FirestoreTaskRepository implements ITaskRepository
         return dataCollection.docs.map(doc => {
             const data = doc.data();
 
-            return new TaskEntity(
+            return new TasksEntity(
                data.id,
                 data.title,
                 data.description,
@@ -40,7 +40,7 @@ export class FirestoreTaskRepository implements ITaskRepository
     }
 
     /** Permite guardar la información de una nueva tarea **/
-    async save(task: TaskEntity):Promise<TaskEntity>
+    async save(task: TasksEntity):Promise<TasksEntity>
     {
         await this.collection.doc(task.id).set(
         {
@@ -56,7 +56,7 @@ export class FirestoreTaskRepository implements ITaskRepository
     }
 
     /** Permite modificar la información de una tarea por medio del ID en la base de datos **/
-    async update(task: TaskEntity): Promise<TaskEntity>
+    async update(task: TasksEntity): Promise<TasksEntity>
     {
         const taskRef = this.collection.doc(task.id);
         await taskRef.update(
@@ -88,7 +88,7 @@ export class FirestoreTaskRepository implements ITaskRepository
     }
 
     /** Permite obtener una tarea por su id **/
-    async getById(id: string): Promise<TaskEntity | null>
+    async getById(id: string): Promise<TasksEntity | null>
     {
         const document = await this.collection.doc(id).get();
 
@@ -96,7 +96,7 @@ export class FirestoreTaskRepository implements ITaskRepository
 
         const data = document.data()!;
 
-        return new TaskEntity(
+        return new TasksEntity(
             document.id,
             data.title,
             data.description,

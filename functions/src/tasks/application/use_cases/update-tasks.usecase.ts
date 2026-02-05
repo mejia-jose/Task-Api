@@ -1,14 +1,14 @@
-import { TaskEntity } from "../../domain/entities/task.entity";
-import { ITaskRepository } from "../../domain/ports/task.repository.interface";
-import { UpdateTaskDTO } from "../dtos/task.dto";
+import { TasksEntity } from "../../domain/entities/tasks.entity";
+import { ITasksRepository } from "../../domain/ports/tasks.repository.interface";
+import { UpdateTaskDTO } from "../dtos/tasks.dto";
 
-export class UpdateTaskUseCase
+export class UpdateTasksUseCase
 {
     /** Se inyecta la interfaz del repositorio de task(tareas) **/
-    constructor(private readonly taskRepository: ITaskRepository){}
+    constructor(private readonly taskRepository: ITasksRepository){}
     
     /** Permite ejecutar el caso de uso de actualizar la información de una tarea **/
-    async execute(body : UpdateTaskDTO): Promise<TaskEntity>
+    async execute(body : UpdateTaskDTO): Promise<TasksEntity>
     {
        const task = await this.taskRepository.getById(body.taskId);
 

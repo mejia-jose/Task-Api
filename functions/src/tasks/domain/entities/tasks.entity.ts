@@ -1,8 +1,9 @@
 import { v4 as uuidv4 } from 'uuid';
 
-import { TaskStatus } from '../enum/task.status.enum';
+import { TaskStatus } from '../enum/tasks.status.enum';
+import { TaskMessages } from '../../../shared/constants/messages';
 
-export class TaskEntity
+export class TasksEntity
 {
     constructor(
         public readonly id: string,
@@ -15,17 +16,17 @@ export class TaskEntity
         public deletedAt: Date | null = null,
     ){}
 
-    static create(title: string, description: string, userId: string): TaskEntity
+    static create(title: string, description: string, userId: string): TasksEntity
     {
         return (
-            new TaskEntity(
+            new TasksEntity(
                 uuidv4(),
                 title,
                 description,
                 TaskStatus.PENDING,
                 userId,
-                TaskEntity.getDate(),
-                TaskEntity.getDate(),
+                TasksEntity.getDate(),
+                TasksEntity.getDate(),
                 null
             )
         )
@@ -39,22 +40,22 @@ export class TaskEntity
     update(title: string, description: string): void
     {
         if (this.status === TaskStatus.CANCELLED) { 
-            throw new Error('Cancelled tasks cannot be updated'); 
+            throw new Error(TaskMessages.ERROR.TASK_CANNOT_BE_UPDATED); 
         }
 
         this.title = title;
         this.description = description;
-        this.updatedAt = TaskEntity.getDate();
+        this.updatedAt = TasksEntity.getDate();
     }
 
     updateStatus(status: TaskStatus): void
     {
         if(this.status === TaskStatus.CANCELLED)
         {
-            throw new Error('Tasks that have been previously deleted cannot have their status changed.');
+            throw new Error(TaskMessages.ERROR.TASK_STATUS_NOT_CHANGE);
         }
 
-        const currentDate = TaskEntity.getDate();
+        const currentDate = TasksEntity.getDate();
         if(status === TaskStatus.CANCELLED)
         {
             this.deletedAt = currentDate;
