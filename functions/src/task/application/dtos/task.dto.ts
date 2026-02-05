@@ -1,3 +1,5 @@
+import { TaskStatus } from "../../domain/enum/task.status.enum";
+
 export interface CreateTaskDTO
 {
     title: string,
@@ -10,4 +12,10 @@ export interface UpdateTaskDTO
     taskId: string;
     title: string;
     description: string;
+}
+
+export interface UpdateStatusTaskDTO
+{
+    taskId: string;
+    status:TaskStatus
 }

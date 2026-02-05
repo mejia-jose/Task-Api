@@ -12,7 +12,7 @@ export class TaskEntity
         public readonly userId: string,
         public createdAt: Date,
         public updatedAt: Date,
-        public deleteaAt: Date | null = null,
+        public deletedAt: Date | null = null,
     ){}
 
     static create(title: string, description: string, userId: string): TaskEntity
@@ -49,9 +49,17 @@ export class TaskEntity
 
     updateStatus(status: TaskStatus): void
     {
+        if(this.status === TaskStatus.CANCELLED)
+        {
+            throw new Error('Tasks that have been previously deleted cannot have their status changed.');
+        }
+
         const currentDate = TaskEntity.getDate();
+        if(status === TaskStatus.CANCELLED)
+        {
+            this.deletedAt = currentDate;
+        }
         this.status = status;
         this.updatedAt = currentDate;
-        this.deleteaAt = currentDate;
     }
 }
