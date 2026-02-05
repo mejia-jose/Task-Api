@@ -27,6 +27,7 @@ export const TaskMessages =
   ERROR: {
     TASK_NOT_FOUND: 'La tarea no fue encontrada. Por favor, verifique que los datos proporcionados sean correctos e intente nuevamente.',
     TASK_ALREADY_CANCELLED: 'La tarea ya se encuentra cancelada.',
+    TASK_ALREADY_COMPLETED: 'La tarea ya se encuentra completada.',
     TASK_CANNOT_BE_UPDATED: 'Las tareas canceladas no pueden ser modificadas.',
     TASK_STATUS_NOT_CHANGE: 'Las tareas que se hayan eliminado previamente no podrán cambiar su estado', 
     INVALID_TITLE: "El título de la tarea no es válido.",

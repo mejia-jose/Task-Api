@@ -11,7 +11,7 @@ export class UpdateTasksUseCase
     /** Permite ejecutar el caso de uso de actualizar la información de una tarea **/
     async execute(body : UpdateTaskDTO): Promise<TasksEntity>
     {
-       const task = await this.taskRepository.getById(body.tasksId);
+       const task = await this.taskRepository.getById(body.taskId);
 
        if(!task)
        {

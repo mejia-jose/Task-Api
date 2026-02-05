@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 
 import { CreateTasksUseCase } from "../../../application/use_cases/create-tasks.usecase";
 import { GetAllTasksUseCase } from "../../../application/use_cases/get-all-tasks.usecase";
-import { UpdateStatusTasksUseCase } from "../../../application/use_cases/update-status-tasks.usecase";
+import { MarkTaskCompletedUseCase } from "../../../application/use_cases/mark-task-completed.usecase";
 import { UpdateTasksUseCase } from "../../../application/use_cases/update-tasks.usecase";
 import { TaskMessages } from "../../../../shared/constants/messages";
 import { MapResponse } from "../../../../shared/responses/response";
@@ -13,7 +13,7 @@ export class TasksController
         private createTasksUseCase: CreateTasksUseCase,
         private getAllTasksUseCase: GetAllTasksUseCase,
         private updateTasksUseCase: UpdateTasksUseCase,
-         private updateTasksTaskUseCase: UpdateStatusTasksUseCase,
+        private markTaskCompletedUseCase: MarkTaskCompletedUseCase,
     )
     {}
 
@@ -62,10 +62,10 @@ export class TasksController
     {
         try 
         {
-            const { tasksId, title, description } = req.body;
+            const { taskId, title, description } = req.body;
 
             const updatedTask = await this.updateTasksUseCase.execute({
-                tasksId,
+                taskId,
                 title,
                 description,
             });
@@ -75,6 +75,28 @@ export class TasksController
                     type: true,
                     messages: TaskMessages.SUCCESS.TASK_UPDATED,
                     data: updatedTask
+                })
+            );
+
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    /** Permite delegar al caso de uso de actualizar el estado de una tarea y retornar la respuesta */
+    async completeTasks(req: Request, res: Response, next: NextFunction)
+    {
+        try 
+        {
+            const { taskId } = req.params as { taskId: string};
+
+            const updateStatus = await this.markTaskCompletedUseCase.execute(taskId);
+
+            return res.status(200).json(
+                MapResponse.ResultJson({
+                    type: true,
+                    messages: TaskMessages.SUCCESS.TASK_UPDATED,
+                    data: updateStatus
                 })
             );
 

@@ -9,7 +9,7 @@ import { GetUserByEmailUseCase } from "./users/application/use_cases/get-user-by
 import { CreateTasksUseCase } from "./tasks/application/use_cases/create-tasks.usecase";
 import { GetAllTasksUseCase } from "./tasks/application/use_cases/get-all-tasks.usecase";
 import { UpdateTasksUseCase } from "./tasks/application/use_cases/update-tasks.usecase";
-import { UpdateStatusTasksUseCase } from "./tasks/application/use_cases/update-status-tasks.usecase";
+import { MarkTaskCompletedUseCase } from "./tasks/application/use_cases/mark-task-completed.usecase";
 import { UserController } from "./users/adapters/web/controllers/user.controller";
 import { TasksController } from "./tasks/adapters/web/controllers/tasks.controller";
 import { userRouter } from "./users/adapters/web/routes/user.routes";
@@ -41,10 +41,10 @@ const tasksRepository = new FirestoreTasksRepository(db);
 const createTasksUseCase = new CreateTasksUseCase(tasksRepository);
 const getAllTasksUseCase = new GetAllTasksUseCase(tasksRepository);
 const updateTasksUseCase = new UpdateTasksUseCase(tasksRepository);
-const updateStatusTasksUseCase = new UpdateStatusTasksUseCase(tasksRepository);
+const markTaskCompletedUseCase = new MarkTaskCompletedUseCase(tasksRepository);
 
 /** Se instancia el controllador de User y se le inyectan los casos de uso**/
-const tasksController = new TasksController(createTasksUseCase,getAllTasksUseCase,updateTasksUseCase,updateStatusTasksUseCase);
+const tasksController = new TasksController(createTasksUseCase,getAllTasksUseCase,updateTasksUseCase,markTaskCompletedUseCase);
 
 /** Se intancian las rutas para hacer uso del controller de usuarios**/
 const tasksRoutes = taskRouter(tasksController);

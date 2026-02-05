@@ -43,7 +43,7 @@ export const GetAllTasksSchema = Joi.object(
 });
 
 export const UpdateTasksSchema = Joi.object({
-  tasksId: Joi.string()
+  taskId: Joi.string()
     .guid({ version: "uuidv4" })
     .required()
     .messages({
@@ -68,5 +68,16 @@ export const UpdateTasksSchema = Joi.object({
     .optional()
     .messages({
       "string.base": TaskMessages.ERROR.INVALID_DESCRIPTION,
+    }),
+});
+
+export const UpdateStatusTasksSchema = Joi.object(
+{
+  taskId: Joi.string()
+    .guid({ version: "uuidv4" })
+    .required()
+    .messages({
+       "string.guid": TaskMessages.ERROR.TASKS_TYPE_UUID,
+      "any.required": TaskMessages.ERROR.REQUIRED_TASKS_ID,
     }),
 });
