@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 
-import { CreateTasksUseCae } from "../../../application/use_cases/create-tasks.usecase";
+import { CreateTasksUseCase } from "../../../application/use_cases/create-tasks.usecase";
 import { GetAllTasksUseCase } from "../../../application/use_cases/get-all-tasks.usecase";
 import { UpdateStatusTasksUseCase } from "../../../application/use_cases/update-status-tasks.usecase";
 import { UpdateTasksUseCase } from "../../../application/use_cases/update-tasks.usecase";
@@ -10,10 +10,10 @@ import { MapResponse } from "../../../../shared/responses/response";
 export class TasksController
 {
     constructor(
-        private createTasksUseCase: CreateTasksUseCae,
+        private createTasksUseCase: CreateTasksUseCase,
         private getAllTasksUseCase: GetAllTasksUseCase,
-        private updateTasksTaskUseCase: UpdateStatusTasksUseCase,
         private updateTasksUseCase: UpdateTasksUseCase,
+         private updateTasksTaskUseCase: UpdateStatusTasksUseCase,
     )
     {}
 
@@ -22,7 +22,7 @@ export class TasksController
     {
         try 
         {
-            const { title, description, userId } = req.body;
+            const { title, description, userId } = req?.body;
 
             const task = await this.createTasksUseCase.execute({title,description,userId});
 
