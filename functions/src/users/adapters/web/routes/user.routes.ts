@@ -9,7 +9,7 @@ export const userRouter = (controller: UserController) =>
 {
     const router = Router();
 
-    router.post('/user/find',validateData(UserEmailSchema), (req,res,next) => controller.findUser(req,res,next));
+    router.post('/login',validateData(UserEmailSchema), (req,res,next) => controller.findUser(req,res,next));
     router.post('/user',validateData(UserEmailSchema), (req, res, next) => (controller.create(req, res,next)));
     return router;
 }

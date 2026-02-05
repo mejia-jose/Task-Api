@@ -11,6 +11,7 @@ export const UserMessages =
     EMPTY_EMAIL: "El correo electrónico no puede estar vacío",
     USER_NOT_FOUND: ' El usuario no se encuentra registrado.',
     ERROR_GENERAL: 'Validación fallida: por favor,revisa los campos requeridos.',
+    UNAUTHORIZED: 'Acceso no autorizado: por favor debes iniciar sesión para continuar.'
   }
 }
 

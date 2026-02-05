@@ -4,9 +4,12 @@ import { CreateUserUseCase } from "../../../application/use_cases/create-user.us
 import { UserMessages } from "../../../../shared/constants/messages";
 import { MapResponse } from "../../../../shared/responses/response";
 import { GetUserByEmailUseCase } from "../../../application/use_cases/get-user-by-email.usecase";
+import { userAuth } from "../../../../shared/middlewares/auth.middleware";
 
 export class UserController
 {
+    private loggedUsers: Set<string> = new Set<string>();
+
     constructor(
         private createUserUseCase: CreateUserUseCase,
         private getUserByEmailUseCase: GetUserByEmailUseCase,
@@ -28,6 +31,8 @@ export class UserController
                     messages: UserMessages.ERROR.USER_NOT_FOUND
                 }))
             }
+            
+            userAuth(user.email,user.id);
 
             return res.status(200).json(MapResponse.ResultJson({
                 type: true,
