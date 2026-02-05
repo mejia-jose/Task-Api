@@ -38,6 +38,10 @@ export class TaskEntity
 
     update(title: string, description: string): void
     {
+        if (this.status === TaskStatus.CANCELLED) { 
+            throw new Error('Cancelled tasks cannot be updated'); 
+        }
+
         this.title = title;
         this.description = description;
         this.updatedAt = TaskEntity.getDate();

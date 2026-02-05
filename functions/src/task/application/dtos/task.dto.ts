@@ -4,3 +4,10 @@ export interface CreateTaskDTO
     description: string,
     userId: string
 }
+
+export interface UpdateTaskDTO
+{
+    taskId: string;
+    title: string;
+    description: string;
+}
