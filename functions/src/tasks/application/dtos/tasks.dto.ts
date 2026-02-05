@@ -9,13 +9,13 @@ export interface CreateTaskDTO
 
 export interface UpdateTaskDTO
 {
-    taskId: string;
+    tasksId: string;
     title: string;
     description: string;
 }
 
 export interface UpdateStatusTaskDTO
 {
-    taskId: string;
+    tasksId: string;
     status:TaskStatus
 }

@@ -22,21 +22,12 @@ export class TasksController
     {
         try 
         {
-            const { userId } = req.query;
-
-            if (!userId || typeof userId !== "string") {
-                return res.status(400).json({
-                    success: false,
-                    messages: "El userId es obligatorio y debe ser un string",
-                    data: []
-                });
-            }
-
-            const tasks = await this.getAllTasksUseCase.execute(userId);
+            const { userId } = req.query as { userId: string };
+            const tasks = await this.getAllTasksUseCase.execute(userId!);
 
             return res.status(200).json({
                 success: true,
-                messages: "Listado de tareas obtenido correctamente",
+                messages: TaskMessages.SUCCESS.LIST_TASKS,
                 data: tasks
             });
             
@@ -61,6 +52,32 @@ export class TasksController
                     data: task
                 })
             );
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    /** Permite delegar al caso de uso de actualizar tareas y retornar la respuesta */
+    async update(req: Request, res: Response, next: NextFunction)
+    {
+        try 
+        {
+            const { tasksId, title, description } = req.body;
+
+            const updatedTask = await this.updateTasksUseCase.execute({
+                tasksId,
+                title,
+                description,
+            });
+
+            return res.status(200).json(
+                MapResponse.ResultJson({
+                    type: true,
+                    messages: TaskMessages.SUCCESS.TASK_UPDATED,
+                    data: updatedTask
+                })
+            );
+
         } catch (error) {
             next(error);
         }

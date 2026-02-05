@@ -18,13 +18,14 @@ export const TaskMessages =
 {
   SUCCESS: {
     TASK_CREATED: 'La tarea ha sido creada correctamente.',
+    LIST_TASKS: 'Listado de tareas obtenido correctamente.',
     TASK_UPDATED: 'La tarea ha sido actualizada correctamente.',
     TASK_DELETED: 'La tarea ha sido eliminada correctamente.',
     TASK_CANCELLED: 'La tarea ha sido cancelada correctamente.',
     TASK_COMPLETED: 'La tarea ha sido marcada como completada.',
   },
   ERROR: {
-    TASK_NOT_FOUND: 'La tarea no se encuentra registrada.',
+    TASK_NOT_FOUND: 'La tarea no fue encontrada. Por favor, verifique que los datos proporcionados sean correctos e intente nuevamente.',
     TASK_ALREADY_CANCELLED: 'La tarea ya se encuentra cancelada.',
     TASK_CANNOT_BE_UPDATED: 'Las tareas canceladas no pueden ser modificadas.',
     TASK_STATUS_NOT_CHANGE: 'Las tareas que se hayan eliminado previamente no podrán cambiar su estado', 
@@ -35,5 +36,7 @@ export const TaskMessages =
     INVALID_USER_ID: "El ID del usuario no es válido",
     REQUIRED_USER_ID: "El ID del usuario es obligatorio",
     USERID_TYPE_UUID: "El userId debe ser un UUID válido",
+    REQUIRED_TASKS_ID: "El ID de la tarea es obligatorio",
+    TASKS_TYPE_UUID: "El ID de la tarea debe ser un UUID válido",
   }
 };

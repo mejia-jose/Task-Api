@@ -1,3 +1,4 @@
+import { TaskMessages } from "../../../shared/constants/messages";
 import { TasksEntity } from "../../domain/entities/tasks.entity";
 import { ITasksRepository } from "../../domain/ports/tasks.repository.interface";
 import { UpdateTaskDTO } from "../dtos/tasks.dto";
@@ -10,11 +11,11 @@ export class UpdateTasksUseCase
     /** Permite ejecutar el caso de uso de actualizar la información de una tarea **/
     async execute(body : UpdateTaskDTO): Promise<TasksEntity>
     {
-       const task = await this.taskRepository.getById(body.taskId);
+       const task = await this.taskRepository.getById(body.tasksId);
 
        if(!task)
        {
-         throw new Error('Tas not found.');
+         throw new Error(TaskMessages.ERROR.TASK_NOT_FOUND);
        }
 
        task.update(body.title, body.description);

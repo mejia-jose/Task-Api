@@ -41,3 +41,32 @@ export const GetAllTasksSchema = Joi.object(
       "string.guid": TaskMessages.ERROR.USERID_TYPE_UUID
     }),
 });
+
+export const UpdateTasksSchema = Joi.object({
+  tasksId: Joi.string()
+    .guid({ version: "uuidv4" })
+    .required()
+    .messages({
+      "string.guid": TaskMessages.ERROR.TASKS_TYPE_UUID,
+      "any.required": TaskMessages.ERROR.REQUIRED_TASKS_ID,
+    }),
+
+  title: Joi.string()
+    .trim()
+    .min(3)
+    .required()
+    .messages({
+      "string.base": TaskMessages.ERROR.INVALID_TITLE,
+      "string.empty": TaskMessages.ERROR.REQUIRED_TITLE,
+      "string.min": TaskMessages.ERROR.TITLE_LENGTH,
+      "any.required": TaskMessages.ERROR.REQUIRED_TITLE,
+    }),
+
+  description: Joi.string()
+    .trim()
+    .allow('')
+    .optional()
+    .messages({
+      "string.base": TaskMessages.ERROR.INVALID_DESCRIPTION,
+    }),
+});

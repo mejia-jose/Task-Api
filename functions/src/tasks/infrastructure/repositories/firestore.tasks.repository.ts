@@ -28,7 +28,7 @@ export class FirestoreTasksRepository implements ITasksRepository
             const data = doc.data();
 
             return new TasksEntity(
-               data.id,
+                data.id,
                 data.title,
                 data.description,
                 data.status,
