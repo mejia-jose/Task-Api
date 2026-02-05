@@ -30,3 +30,14 @@ export const CreateTaskSchema = Joi.object({
       "any.required": TaskMessages.ERROR.REQUIRED_USER_ID,
     }),
 });
+
+export const GetAllTasksSchema = Joi.object(
+{
+  userId: Joi.string()
+    .guid({ version: "uuidv4" })
+    .required()
+    .messages({
+      "any.required": TaskMessages.ERROR.REQUIRED_USER_ID,
+      "string.guid": TaskMessages.ERROR.USERID_TYPE_UUID
+    }),
+});

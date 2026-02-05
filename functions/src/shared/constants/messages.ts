@@ -34,5 +34,6 @@ export const TaskMessages =
     INVALID_DESCRIPTION: "La descripción no es válida",
     INVALID_USER_ID: "El ID del usuario no es válido",
     REQUIRED_USER_ID: "El ID del usuario es obligatorio",
+    USERID_TYPE_UUID: "El userId debe ser un UUID válido",
   }
 };

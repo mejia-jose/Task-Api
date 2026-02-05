@@ -49,8 +49,8 @@ export class FirestoreTasksRepository implements ITasksRepository
            description: task.description,
            status: task.status,
            userId: task.userId,
-           createdAt: task.createdAt,
-           updateAt: task.createdAt
+           createdAt: firestore.Timestamp.fromDate(task.createdAt),
+           updatedAt: firestore.Timestamp.fromDate(task.updatedAt)
         })
        return task;
     }

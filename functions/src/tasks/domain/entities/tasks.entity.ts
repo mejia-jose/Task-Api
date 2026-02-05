@@ -25,16 +25,11 @@ export class TasksEntity
                 description,
                 TaskStatus.PENDING,
                 userId,
-                TasksEntity.getDate(),
-                TasksEntity.getDate(),
+                new Date(),
+                new Date(),
                 null
             )
         )
-    }
-
-    protected static getDate(): Date
-    {
-       return new Date();
     }
 
     update(title: string, description: string): void
@@ -45,7 +40,7 @@ export class TasksEntity
 
         this.title = title;
         this.description = description;
-        this.updatedAt = TasksEntity.getDate();
+        this.updatedAt = new Date();
     }
 
     updateStatus(status: TaskStatus): void
@@ -55,7 +50,7 @@ export class TasksEntity
             throw new Error(TaskMessages.ERROR.TASK_STATUS_NOT_CHANGE);
         }
 
-        const currentDate = TasksEntity.getDate();
+        const currentDate = new Date();
         if(status === TaskStatus.CANCELLED)
         {
             this.deletedAt = currentDate;
