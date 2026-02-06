@@ -5,4 +5,5 @@ export interface IUserRepository
 {
     save(user:UserEntity):Promise<UserEntity>;
     getUserByEmail(email:string):Promise<UserEntity | null>;
+    getUserById(userId: string) :Promise<UserEntity | null>;
 }

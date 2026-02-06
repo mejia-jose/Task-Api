@@ -36,4 +36,17 @@ export class FirestoreUserRepository implements IUserRepository
        const data = doc.data();
        return new UserEntity(doc.id, data.email,data.name,data.createdAt.toDate());
     }
+    
+    async getUserById(userId: string) :Promise<UserEntity | null>
+    {
+        const document = await this.collection.doc(userId).get();
+
+        if (!document.exists)
+        {
+            return null;
+        }
+
+        const data = document.data()! ;
+        return new UserEntity(document.id, data.email,data.name,data.createdAt.toDate());
+    }
 }

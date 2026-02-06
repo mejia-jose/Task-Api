@@ -10,6 +10,7 @@ export const UserMessages =
     INVALID_EMAIL: "El formato del correo electrónico no es válido",
     EMPTY_EMAIL: "El correo electrónico no puede estar vacío",
     USER_NOT_FOUND: 'El usuario ingresado no se encuentra registrado. Haz clic en Regístrate aquí y crea tu cuenta en pocos segundos.',
+    USER_NOT_FOUND_ID: 'No se ha podido identificar el usuario, por favor cierra la sesión y vuelve a iniciarla.',
     ERROR_GENERAL: 'Validación fallida: por favor,revisa los campos requeridos.',
     UNAUTHORIZED: 'Acceso no autorizado: por favor debes iniciar sesión para continuar.',
     NAME_REQUIRED: 'El nombre del usuario es obligarorio.',
