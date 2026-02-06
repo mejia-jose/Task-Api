@@ -1,6 +1,8 @@
 import cors from "cors";
 
-const urlList = ['http://localhost:4200', 'https://tu-app-angular.com'];
+import { CorsError } from "../constants/messages";
+
+const urlList = ['http://localhost:4200', 'https://task-manager-lyart-psi.vercel.app'];
 
 export const corsMiddleware = cors(
 {
@@ -8,7 +10,7 @@ export const corsMiddleware = cors(
         if (urlList.indexOf(origin) !== -1 || !origin) {
         callback(null, true);
         } else {
-        callback(new Error('No permitido por políticas de CORS'));
+        callback(new Error(CorsError.NOT_ALLOWED));
         }
     },
     methods: ['GET', 'POST', 'PATCH'],

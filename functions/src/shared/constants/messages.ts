@@ -45,3 +45,8 @@ export const TaskMessages =
     TASKS_TYPE_UUID: "El ID de la tarea debe ser un UUID válido",
   }
 };
+
+export const CorsError = {
+  NOT_ALLOWED:
+    'Acceso bloqueado por la política de CORS. El origen de la solicitud no está autorizado.'
+};
