@@ -2,7 +2,8 @@ export const UserMessages =
 {
   SUCCESS:{
     LOGIN: 'Usuario autenticado correctamente.',
-    USER_CREATED: "Usuario creado correctamente."
+    USER_CREATED: "Usuario creado correctamente.",
+    LOGOUT: "Sesión cerrada correctamente."
   },
   
   ERROR:{
@@ -14,7 +15,8 @@ export const UserMessages =
     ERROR_GENERAL: 'Validación fallida: por favor,revisa los campos requeridos.',
     UNAUTHORIZED: 'Acceso no autorizado: por favor debes iniciar sesión para continuar.',
     NAME_REQUIRED: 'El nombre del usuario es obligarorio.',
-    NAME_LENGTH: "El nombre debe tener al menos 3 caracteres"
+    NAME_LENGTH: "El nombre debe tener al menos 3 caracteres",
+    ERROR_LOGOUT: "El usuario no se encuentra autenticado."
   }
 }
 

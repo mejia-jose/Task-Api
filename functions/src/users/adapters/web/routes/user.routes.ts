@@ -3,6 +3,7 @@ import { Router } from "express";
 import { UserController } from "../controllers/user.controller";
 import { validateData } from "../../../../shared/middlewares/validate.middleware";
 import { CreateUserSchema, UserEmailSchema } from "../schemas/user.schemas";
+import { isAuthenticated } from "../../../../shared/middlewares/auth.middleware";
 
 /** Se definen las rutas del controlador de usuarios, para exponerlas **/
 export const userRouter = (controller: UserController) =>
@@ -11,5 +12,6 @@ export const userRouter = (controller: UserController) =>
 
     router.post('/auth/login',validateData(UserEmailSchema), (req,res,next) => controller.findUser(req,res,next));
     router.post('/user',validateData(CreateUserSchema), (req, res, next) => (controller.create(req, res,next)));
+    router.post('/auth/logout', isAuthenticated,(req,res,next) => controller.logoutUser(req,res,next));
     return router;
 }

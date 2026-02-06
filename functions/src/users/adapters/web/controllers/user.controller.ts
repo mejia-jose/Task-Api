@@ -4,7 +4,7 @@ import { CreateUserUseCase } from "../../../application/use_cases/create-user.us
 import { UserMessages } from "../../../../shared/constants/messages";
 import { MapResponse } from "../../../../shared/responses/response";
 import { GetUserByEmailUseCase } from "../../../application/use_cases/get-user-by-email.usecase";
-import { userAuth } from "../../../../shared/middlewares/auth.middleware";
+import { userAuth, userLogout } from "../../../../shared/middlewares/auth.middleware";
 
 export class UserController
 {
@@ -53,6 +53,7 @@ export class UserController
         {
             const { email, name } = req?.body;
 
+            /** Consulta y valida si el usuario existe **/
             const existingUser = await this.getUserByEmailUseCase.execute(email);
             if(existingUser)
             {
@@ -63,8 +64,9 @@ export class UserController
                 }));   
             }
 
+            /** Llama al caso de uso y registra al usuario **/
             const newUser = await this.createUserUseCase.execute(email,name);
-            
+
             userAuth(newUser.email,newUser.id);
 
             return res.status(201).json(MapResponse.ResultJson({
@@ -78,4 +80,29 @@ export class UserController
             next(error)
         }
     }
+
+    /** Permite cerrar la sesión del usuario en backend **/
+    async logoutUser(req: Request, res:Response, next: NextFunction)
+    {
+        /** Se obtiene la información del usuario de los headers */
+        const email = req.headers['x-user-email'] as string;
+        const id = req.headers['x-user-id'] as string;
+
+        /** Valida si el usuario esta autenticado **/
+        if (!email || !id)
+        {
+            return res.status(400).json(MapResponse.ResultJson({
+                type: false,
+                messages: UserMessages.ERROR.ERROR_LOGOUT,
+            }));
+        }
+
+        userLogout(email, id);
+
+        return res.status(201).json(MapResponse.ResultJson({
+            type: true,
+            messages: UserMessages.SUCCESS.LOGOUT,
+        }));
+    }
+
 }
