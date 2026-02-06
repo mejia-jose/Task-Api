@@ -1,5 +1,4 @@
 import express  from "express";
-import cors from "cors";
 
 import { db } from "./shared/infrastructure/config/firestore.config";
 import { FirestoreUserRepository } from "./users/infrastructure/repositories/firestore.user.repository";
@@ -14,11 +13,12 @@ import { CancelTaskUseCase } from "./tasks/application/use_cases/cancel-tasks.us
 import { UserController } from "./users/adapters/web/controllers/user.controller";
 import { TasksController } from "./tasks/adapters/web/controllers/tasks.controller";
 import { userRouter } from "./users/adapters/web/routes/user.routes";
-import { taskRouter } from "./tasks/adapters/web/routes/tasks.router";;
+import { taskRouter } from "./tasks/adapters/web/routes/tasks.routes";;
 import { captureGeneralError } from "./shared/middlewares/error.middleware";
+import { corsMiddleware } from "./shared/middlewares/cors.middleware";
 
 const app = express()
-app.use(cors());
+app.use(corsMiddleware);
 app.use(express.json());
 const port = 3000;
 
@@ -39,7 +39,7 @@ const userRoutes = userRouter(userController);
 const tasksRepository = new FirestoreTasksRepository(db);
 
 /** Se instancian los casos de uso del módulo de tasks y se les inyecta el repositorio **/
-const createTasksUseCase = new CreateTasksUseCase(tasksRepository);
+const createTasksUseCase = new CreateTasksUseCase(tasksRepository,userRepository);
 const getAllTasksUseCase = new GetAllTasksUseCase(tasksRepository);
 const updateTasksUseCase = new UpdateTasksUseCase(tasksRepository);
 const markTaskCompletedUseCase = new MarkTaskCompletedUseCase(tasksRepository);
