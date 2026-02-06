@@ -64,6 +64,9 @@ export class UserController
             }
 
             const newUser = await this.createUserUseCase.execute(email,name);
+            
+            userAuth(newUser.email,newUser.id);
+
             return res.status(201).json(MapResponse.ResultJson({
                 type: true,
                 messages: UserMessages.SUCCESS.USER_CREATED,
