@@ -10,44 +10,44 @@ Este repositorio contiene el el backend de gestión de tareas, autenticación y 
 # Funcionalidades
 
 1. Autenticación y gestión de usuarios  
-Endpoints para la gestión y validación de usuarios.
+    Endpoints para la gestión y validación de usuarios.
 
-**Ejemplos de endpoints:**
-- POST api/user # Registro de usuario  
-- POST api/auth/login # Inicio de sesión  
-- POST /auth/logout # Cierre de sesión  
+    **Ejemplos de endpoints:**
+    - POST `api/user` # Registro de usuario  
+    - POST `api/auth/login` # Inicio de sesión  
+    - POST `auth/logout` # Cierre de sesión  
 
-La identidad del usuario se maneja mediante headers personalizados:
-- 'x-user-email'
-- 'x-user-id'
+    La identidad del usuario se maneja mediante headers personalizados:
+    - 'x-user-email'
+    - 'x-user-id'
 
 2. Gestión de tareas  
-Endpoints para la gestión de tareas.
+    Endpoints para la gestión de tareas.
 
-**Ejemplos de endpoints:**
-- POST api/tasks # Crear una nueva tarea y asociarla aun usuario 
-- GET api/tasks Listar tareas del usuario autenticado  
-- PATCH api/tasks # Actualiza la información de una tarea existente  
-- PATCH /tasks/:taskId/complete # Actualiza el estado de una tarea a Completada
-- PATCH /tasks/:taskId/cancel  
-  Cambia el estado de la tarea a *Cancelada*, implementando un borrado lógico (soft delete) que evita la eliminación física del registro en la base de datos.
+    **Ejemplos de endpoints:**
+    - POST `api/tasks` # Crear una nueva tarea y asociarla aun usuario 
+    - GET `api/tasks` Listar tareas del usuario autenticado  
+    - PATCH `api/tasks` # Actualiza la información de una tarea existente  
+    - PATCH `api/tasks/:taskId/complete` # Actualiza el estado de una tarea a Completada
+    - PATCH `api/tasks/:taskId/cancel`  
+        Cambia el estado de la tarea a *Cancelada*, implementando un borrado lógico (soft delete) que evita la eliminación física del registro en la base de datos.
 
 3. Validación de datos  
-Se implementan validaciones de entrada para garantizar la integridad de la información antes de procesarla.
+    Se implementan validaciones de entrada para garantizar la integridad de la información antes de procesarla.
 
-**Ejemplos de validaciones:**
-- Campos obligatorios (título de la tarea, email, contraseña).
-- Tipos de datos correctos (strings, identificadores numéricos).
-- Restricciones de longitud y formato.
-- Prevención de operaciones inválidas (editar tareas completadas).
+    **Ejemplos de validaciones:**
+    - Campos obligatorios (título de la tarea, email, contraseña).
+    - Tipos de datos correctos (strings, identificadores numéricos).
+    - Restricciones de longitud y formato.
+    - Prevención de operaciones inválidas (editar tareas completadas).
 
 Las validaciones se aplican en la capa de aplicación antes de ejecutar la lógica de negocio.
 
 4. Arquitectura desacoplada  
-El backend está construido bajo los principios de la **Arquitectura Hexagonal**, asegurando:
-- Separación clara entre dominio, aplicación e infraestructura.
-- Independencia de frameworks y bases de datos.
-- Mayor facilidad para pruebas, mantenimiento y escalabilidad.
+    El backend está construido bajo los principios de la **Arquitectura Hexagonal**, asegurando:
+    - Separación clara entre dominio, aplicación e infraestructura.
+    - Independencia de frameworks y bases de datos.
+    - Mayor facilidad para pruebas, mantenimiento y escalabilidad.
 
 # Arquitectura del Proyecto
 - El proyecto está estructurado siguiendo los principios de la **Arquitectura Hexagonal (Ports & Adapters)**, donde la lógica de negocio se mantiene completamente aislada de los detalles de infraestructura y frameworks externos.
