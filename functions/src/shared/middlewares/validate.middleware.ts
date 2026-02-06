@@ -9,7 +9,12 @@ export const validateData = (schema: ObjectSchema) =>
 {
     return(req: Request, res: Response, next: NextFunction) =>
     {
-        const { error } = schema.validate(req.body, { abortEarly: false });
+        const params = {
+            ...req.params,
+            ...req.query,
+            ...req.body
+        };
+        const { error } = schema.validate(params, { abortEarly: false });
 
         if (error) {
             return res.status(400).json(MapResponse.ResultJson({
