@@ -52,3 +52,8 @@ export const CorsError = {
   NOT_ALLOWED:
     'Acceso bloqueado por la política de CORS. El origen de la solicitud no está autorizado.'
 };
+
+export const EnvError = {
+  ACCOUNT_SERVICES_UNDEFINED: 'La variable de entorno ACCOUNT_SERVICES no está definida. ' +
+    'Coloca el nombre del archivo de la cuenta de servicio en el .env y asegúrate de que exista en functions/'
+};

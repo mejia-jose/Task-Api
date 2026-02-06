@@ -167,7 +167,7 @@ Se diseñó la API siguiendo principios REST, utilizando verbos HTTP adecuados y
 
 - Ejecutar la aplicación
     ```bash
-        npm run dev
+        npm run start:dev
 
 # Repositorio:
 
