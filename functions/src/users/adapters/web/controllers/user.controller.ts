@@ -31,7 +31,7 @@ export class UserController
                     messages: UserMessages.ERROR.USER_NOT_FOUND
                 }))
             }
-            
+
             userAuth(user.email,user.id);
 
             return res.status(200).json(MapResponse.ResultJson({
@@ -51,7 +51,7 @@ export class UserController
     {
         try
         {
-            const { email } = req?.body;
+            const { email, name } = req?.body;
 
             const existingUser = await this.getUserByEmailUseCase.execute(email);
             if(existingUser)
@@ -63,7 +63,7 @@ export class UserController
                 }));   
             }
 
-            const newUser = await this.createUserUseCase.execute(email);
+            const newUser = await this.createUserUseCase.execute(email,name);
             return res.status(201).json(MapResponse.ResultJson({
                 type: true,
                 messages: UserMessages.SUCCESS.USER_CREATED,

@@ -7,7 +7,7 @@ export class CreateUserUseCase
   constructor(private readonly userRepository: IUserRepository){}
 
   /** Permite ejecutar el caso de uso de crear usuario **/
-  async execute(email:string): Promise<UserEntity>
+  async execute(email:string, name: string): Promise<UserEntity>
   {
     /** Se consulta el usuario, si existe se retorna **/
     const existingUser = await this.userRepository.getUserByEmail(email);
@@ -17,7 +17,7 @@ export class CreateUserUseCase
     }
 
     /** Se crea el usuario **/
-    const newUser = UserEntity.create(email);
+    const newUser = UserEntity.create(email, name);
     await this.userRepository.save(newUser);
     return newUser;
   }

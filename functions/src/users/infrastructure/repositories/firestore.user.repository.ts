@@ -16,6 +16,7 @@ export class FirestoreUserRepository implements IUserRepository
     {
         await this.collection.doc(user.id).set({
             email: user.email.toLowerCase().trim(),
+            name: user.name,
             createdAt: user.createdAt
         })
        return user;
@@ -33,6 +34,6 @@ export class FirestoreUserRepository implements IUserRepository
 
        const doc = document.docs[0];
        const data = doc.data();
-       return new UserEntity(doc.id, data.email,data.createdAt.toDate());
+       return new UserEntity(doc.id, data.email,data.name,data.createdAt.toDate());
     }
 }
