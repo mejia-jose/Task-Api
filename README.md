@@ -13,9 +13,13 @@ Este repositorio contiene el el backend de gestión de tareas, autenticación y 
     Endpoints para la gestión y validación de usuarios.
 
     **Ejemplos de endpoints:**
-    - POST `api/user` # Registro de usuario  
-    - POST `api/auth/login` # Inicio de sesión  
-    - POST `auth/logout` # Cierre de sesión  
+    - La API funciona tanto en entorno local como en producción; en la nube los endpoints incluyen el prefijo /api por el uso de Firebase Cloud Functions.
+
+    | Recurso     | Acción          | Endpoint en local  | Endpoint en producción(Cloud Functions) | Descripción del endpoint
+    | :--------   | :-------------- | :----------------- | :-------------------------------------- | :----------------------
+    | **Usuario** | Crear           | `POST /user`       | `POST /api/user`                        | Permite registrar un nuevo usuario
+    | **Auth**    | Iniciar sessión | `POST /auth/login` | `POST /api/auth/login`                  | Crea una tarea
+    | **Auth**    | Cerrar sessión  | `POST /auth/logout`| `POST /api/auth/logout`                 | Actualiza una tarea
 
     La identidad del usuario se maneja mediante headers personalizados:
     - 'x-user-email'
@@ -25,12 +29,15 @@ Este repositorio contiene el el backend de gestión de tareas, autenticación y 
     Endpoints para la gestión de tareas.
 
     **Ejemplos de endpoints:**
-    - POST `api/tasks` # Crear una nueva tarea y asociarla aun usuario 
-    - GET `api/tasks` Listar tareas del usuario autenticado  
-    - PATCH `api/tasks` # Actualiza la información de una tarea existente  
-    - PATCH `api/tasks/:taskId/complete` # Actualiza el estado de una tarea a Completada
-    - PATCH `api/tasks/:taskId/cancel`  
-        Cambia el estado de la tarea a *Cancelada*, implementando un borrado lógico (soft delete) que evita la eliminación física del registro en la base de datos.
+    - La API funciona tanto en entorno local como en producción; en la nube los endpoints incluyen el prefijo /api por el uso de Firebase Cloud Functions.
+
+    | Recurso    | Acción         | Endpoint en local | Endpoint en producción(Cloud Functions)       | Descripción del endpoint
+    | :------    | :------------- | :---------------- | :-------------------------------------------- | :----------------------
+    | **Tareas** | Listar tareas | `GET /tasks`      | `GET /api/tasks`                               | Lista las tareas del usuario autenticado
+    | **Tareas** | Crear         | `POST /tasks`     | `POST /api/tasks`                              | Crea una tarea
+    | **Tareas** | Actualizar    | `PATCH /tasks`    | `PATCH /api/tasks`                             | Actualiza una tarea
+    | **Tareas** | Eliminar      | `PATCH /tasks/:taskId/cancel` | `PATCH /api/tasks/:taskId/cancel`  | Aplica borrado lógico cambiando el estado a Cancelada
+    | **Tareas** | Completar     | `PATCH /tasks/:taskId/complete` | `PATCH /api/tasks/:taskId/complete` |
 
 3. Validación de datos  
     Se implementan validaciones de entrada para garantizar la integridad de la información antes de procesarla.
