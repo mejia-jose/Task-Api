@@ -85,8 +85,8 @@ app.get('/', (req, res) => {
   });
 });
 
-app.use('/api',userRoutes);
-app.use('/api', tasksRoutes);
+app.use('/',userRoutes);
+app.use('/', tasksRoutes);
 app.use(captureGeneralError);
 
 export default app;
