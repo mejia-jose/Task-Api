@@ -6,6 +6,11 @@
 **/
 
 import express  from "express";
+import rateLimit from "express-rate-limit";
+import dotenv from 'dotenv';
+import path from "path";
+
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 import { db } from "./shared/infrastructure/config/firestore.config";
 import { FirestoreUserRepository } from "./users/infrastructure/repositories/firestore.user.repository";
@@ -24,8 +29,16 @@ import { taskRouter } from "./tasks/adapters/web/routes/tasks.routes";;
 import { captureGeneralError } from "./shared/middlewares/error.middleware";
 import { corsMiddleware } from "./shared/middlewares/cors.middleware";
 
+/**  Límite de 100 peticiones cada 5 minutos **/
+const limiter = rateLimit({
+  windowMs: 5 * 60 * 1000, 
+  max: 100,
+  message: "Has excedido el número de solicitudes. Intenta más tarde."
+});
+
 const app = express()
 app.use(corsMiddleware);
+app.use(limiter);
 app.use(express.json());
 
 /** Se instancia el repositorio de la entida User **/
@@ -62,6 +75,15 @@ const tasksController = new TasksController(
 
 /** Se intancian las rutas para hacer uso del controller de usuarios**/
 const tasksRoutes = taskRouter(tasksController);
+
+app.get('/', (req, res) => {
+  res.status(200).json({
+    status: 'success',
+    message: 'Api en funcionamiento.',
+    version: '1.0.0',
+    author: 'Jose Mejia'
+  });
+});
 
 app.use('/api',userRoutes);
 app.use('/api', tasksRoutes);

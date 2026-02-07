@@ -2,7 +2,7 @@ import cors from "cors";
 
 import { CorsError } from "../constants/messages";
 
-const urlList = ['http://localhost:4200', 'https://task-manager-lyart-psi.vercel.app'];
+const urlList = ['http://localhost:4200',process.env.ALLOWED_ORIGIN];
 
 export const corsMiddleware = cors(
 {
