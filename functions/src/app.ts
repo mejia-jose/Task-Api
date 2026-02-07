@@ -41,40 +41,48 @@ app.use(corsMiddleware);
 app.use(limiter);
 app.use(express.json());
 
-/** Se instancia el repositorio de la entida User **/
-const userRepository = new FirestoreUserRepository(db);
+const initializeRoutes = () =>
+{
+  /** Se instancia el repositorio de la entida User **/
+  const userRepository = new FirestoreUserRepository(db);
 
-/** Se instancian los casos de uso y se les inyecta el repositorio **/
-const createUserUseCase = new CreateUserUseCase(userRepository);
-const getUserByEmailUseCase = new GetUserByEmailUseCase(userRepository)
+  /** Se instancian los casos de uso y se les inyecta el repositorio **/
+  const createUserUseCase = new CreateUserUseCase(userRepository);
+  const getUserByEmailUseCase = new GetUserByEmailUseCase(userRepository)
 
-/** Se instancia el controllador de User y se le inyectan los casos de uso**/
-const userController = new UserController(createUserUseCase,getUserByEmailUseCase);
+  /** Se instancia el controllador de User y se le inyectan los casos de uso**/
+  const userController = new UserController(createUserUseCase,getUserByEmailUseCase);
 
-/** Se intancian las rutas para hacer uso del controller de usuarios**/
-const userRoutes = userRouter(userController);
+  /** Se intancian las rutas para hacer uso del controller de usuarios**/
+  const userRoutes = userRouter(userController);
 
-/** Se instancia el repositorio de la entidad Tasks **/
-const tasksRepository = new FirestoreTasksRepository(db);
+  /** Se instancia el repositorio de la entidad Tasks **/
+  const tasksRepository = new FirestoreTasksRepository(db);
 
-/** Se instancian los casos de uso del módulo de tasks y se les inyecta el repositorio **/
-const createTasksUseCase = new CreateTasksUseCase(tasksRepository,userRepository);
-const getAllTasksUseCase = new GetAllTasksUseCase(tasksRepository);
-const updateTasksUseCase = new UpdateTasksUseCase(tasksRepository);
-const markTaskCompletedUseCase = new MarkTaskCompletedUseCase(tasksRepository);
-const cancelTaskUseCase = new CancelTaskUseCase(tasksRepository);
+  /** Se instancian los casos de uso del módulo de tasks y se les inyecta el repositorio **/
+  const createTasksUseCase = new CreateTasksUseCase(tasksRepository,userRepository);
+  const getAllTasksUseCase = new GetAllTasksUseCase(tasksRepository);
+  const updateTasksUseCase = new UpdateTasksUseCase(tasksRepository);
+  const markTaskCompletedUseCase = new MarkTaskCompletedUseCase(tasksRepository);
+  const cancelTaskUseCase = new CancelTaskUseCase(tasksRepository);
 
-/** Se instancia el controllador de User y se le inyectan los casos de uso**/
-const tasksController = new TasksController(
-  createTasksUseCase,
-  getAllTasksUseCase,
-  updateTasksUseCase,
-  markTaskCompletedUseCase,
-  cancelTaskUseCase
-);
+  /** Se instancia el controllador de User y se le inyectan los casos de uso**/
+  const tasksController = new TasksController(
+    createTasksUseCase,
+    getAllTasksUseCase,
+    updateTasksUseCase,
+    markTaskCompletedUseCase,
+    cancelTaskUseCase
+  );
 
-/** Se intancian las rutas para hacer uso del controller de usuarios**/
-const tasksRoutes = taskRouter(tasksController);
+  /** Se intancian las rutas para hacer uso del controller de usuarios**/
+  const tasksRoutes = taskRouter(tasksController);
+
+  app.use('/',userRoutes);
+  app.use('/', tasksRoutes);  
+}
+
+initializeRoutes();
 
 app.get('/', (req, res) => {
   res.status(200).json({
@@ -85,8 +93,6 @@ app.get('/', (req, res) => {
   });
 });
 
-app.use('/',userRoutes);
-app.use('/', tasksRoutes);
 app.use(captureGeneralError);
 
 export default app;
