@@ -118,6 +118,13 @@ Las validaciones se aplican en la capa de aplicación antes de ejecutar la lógi
 
 - CORS: Middleware configurado para restringir el acceso únicamente a orígenes autorizados.
 
+- Rate Limiting: Implementación de un limitador de peticiones para prevenir el abuso de los endpoints.
+
+    Configuración: Máximo de 100 peticiones cada 5 minutos.
+
+    Objetivo: Mitigar ataques de fuerza bruta y asegurar que los recursos de Firestore se utilicen de manera eficiente, evitando costos inesperados o denegación de servicio.
+
+
 # Decisiones Técnicas y Por Qué
 
 - Arquitectura Hexagonal (Ports & Adapters)
@@ -151,6 +158,7 @@ Se diseñó la API siguiendo principios REST, utilizando verbos HTTP adecuados y
 
 - Seguridad y Middleware
   **CORS**: Configuración de políticas de acceso entre dominios.
+  **Express Rate Limit**: Mitigar ataques de fuerza bruta y asegurar que los recursos de Firestore se utilicen de manera eficiente, evitando costos inesperados o denegación de servicio
 
 ### Persistencia y Servicios Externos
 - **Firebase Admin SDK**: Integración con servicios de Firebase para autenticación y/o persistencia.
@@ -165,10 +173,51 @@ Se diseñó la API siguiendo principios REST, utilizando verbos HTTP adecuados y
     ```bash
         npm install
 
+- Variables de entorno
+  Para que la API funcione correctamente (especialmente la conexión con Firestore), es necesario configurar un archivo .env en la raíz de la carpeta functions.
+  **Nota**: El archivo .env está incluido en el .gitignore para evitar la exposición de credenciales sensibles en el repositorio.
+
+  - Para facilitar la configuración, se ha incluido un archivo de ejemplo con la estructura necesaria.
+
+        1. Localiza el archivo .env.example en la raíz del proyecto.
+
+        2. Copia su contenido en un nuevo archivo llamado .env.
+
+        3. Completa los valores con tus credenciales de Firebase Service Account.
+
 - Ejecutar la aplicación
     ```bash
         npm run start:dev
 
+# Scripts de Build y Optimización
+
+Para garantizar que la API funcione correctamente en la nube, se utilizaron procesos de optimización durante la fase de construcción:
+
+- Build Optimizado: Se utiliza el compilador de TypeScript para generar código JavaScript limpio y eficiente, compatible con el entorno de ejecución de Node.js 20 en Firebase.
+
+- Minificación y Limpieza: Durante el proceso de empaquetado (firebase deploy), Firebase optimiza el código para reducir el tamaño del bundle, mejorando los tiempos de respuesta ante "Cold Starts".
+
+- Gestión de Dependencias: El despliegue incluye únicamente las dependencias de producción, minimizando la superficie de ataque y el peso de la función.
+
+# Proceso de Despliegue (Manual)
+El flujo de entrega seguido fue:
+
+- Transpilación: Conversión de código fuente (TS) a código de distribución (JS) mediante:
+    ```bash
+        npm run build.
+
+- Validación Local: Pruebas de integración en entorno local para asegurar la estabilidad de las rutas.
+
+- Despliegue Directo: Uso de Firebase CLI para la publicación de la función:
+    ```bash
+        firebase deploy --only functions
+
 # Repositorio:
 
 - Url:(https://github.com/mejia-jose/Task-Api)
+
+# API Desplegada
+
+- La API fue desplegada en **Firebase Cloud Functions**, aprovechando su integración nativa y facilidad de despliegue.
+
+- Url:(https://us-central1-api-task-e844a.cloudfunctions.net/api)
