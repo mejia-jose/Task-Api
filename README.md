@@ -160,9 +160,9 @@ Se diseñó la API siguiendo principios REST, utilizando verbos HTTP adecuados y
   **CORS**: Configuración de políticas de acceso entre dominios.
   **Express Rate Limit**: Mitigar ataques de fuerza bruta y asegurar que los recursos de Firestore se utilicen de manera eficiente, evitando costos inesperados o denegación de servicio
 
-### Persistencia y Servicios Externos
-- **Firebase Admin SDK**: Integración con servicios de Firebase para autenticación y/o persistencia.
+# Persistencia y Servicios Externos
 - **Firebase Functions**: Soporte para ejecución en entornos serverless.
+- ** Firebase Firestore**: Permite guardar y persistir la información
 
 # Configuración del Proyecto
 - Clonar el repositorio
@@ -180,9 +180,7 @@ Se diseñó la API siguiendo principios REST, utilizando verbos HTTP adecuados y
   - Para facilitar la configuración, se ha incluido un archivo de ejemplo con la estructura necesaria.
 
         1. Localiza el archivo .env.example en la raíz del proyecto.
-
         2. Copia su contenido en un nuevo archivo llamado .env.
-
         3. Completa los valores con tus credenciales de Firebase Service Account.
 
 - Ejecutar la aplicación
@@ -199,6 +197,7 @@ Para garantizar que la API funcione correctamente en la nube, se utilizaron proc
 
 - Gestión de Dependencias: El despliegue incluye únicamente las dependencias de producción, minimizando la superficie de ataque y el peso de la función.
 
+
 # Proceso de Despliegue (Manual)
 El flujo de entrega seguido fue:
 
@@ -211,6 +210,14 @@ El flujo de entrega seguido fue:
 - Despliegue Directo: Uso de Firebase CLI para la publicación de la función:
     ```bash
         firebase deploy --only functions
+
+# Arquitectura de Ejecución
+
+Para garantizar la flexibilidad entre el desarrollo y producción, el proyecto maneja dos flujos de entrada:
+
+- Producción (Cloud Functions): El punto de entrada definido para la infraestructura de Cloud Functions es dist/main.js, generado tras ejecutar el script de build. Este archivo es el resultado de la transpilación y optimización de TypeScript a JavaScript.
+
+- Desarrollo (Local): Para pruebas locales, el servidor Express se lanza desde src/server-local.ts para una ejecución inmediata sin paso de compilación previo.
 
 # Repositorio:
 
