@@ -7,7 +7,62 @@
 2. Descripción: 
 Este repositorio contiene el el backend de gestión de tareas, autenticación y registro de usuarios. Está construido bajo los principios de la Arquitectura Hexagonal, garantizando un desacoplamiento total entre la lógica de negocio y los servicios externos.
 
-# Funcionalidades
+# Stack Tecnológico
+
+- Lenguaje y Entorno
+  **Node.js : v22**: Entorno de ejecución del backend.
+  **TypeScript: v5.8**: Tipado estático para mayor robustez, mantenibilidad y escalabilidad del código.
+
+- Framework y Servidor
+  **Express : v5.2**: Framework HTTP ligero para la construcción de la API REST.
+
+- Validación y Utilidades
+  **Joi : v17.13**: Validación de datos de entrada para garantizar integridad y consistencia.
+  **UUID : v11.1**: Generación de identificadores únicos para entidades del dominio.
+
+- Seguridad y Middleware
+  **Cors : v2.8**: Configuración de políticas de acceso entre dominios.
+  **Express Rate Limit : v8.2**: Mitigar ataques de fuerza bruta y asegurar que los recursos de Firestore se utilicen de manera eficiente, evitando costos inesperados o denegación de servicio.
+
+- Otros
+  **Dotenv : 6.11**: Gestión de variables de entorno para configuración segura del servidor.
+  **Firebase Admin : v13.6**: Acceso a servicios de Firebase (Firestore, Auth) desde el backend.
+  **Firebase Functions : v7.0**: Definición y despliegue del backend como funciones serverless en Google Cloud.
+
+# Persistencia y Servicios Externos
+- **Firebase Functions**: Entorno serverlees para la ejecución de lógica de negocio.
+- **Firebase Firestore**: Base de datos NoSQL que permite guardar y persistir la información
+  
+  - Modelo de datos:
+  Estructura de colecciones y campos:
+
+    Colección users:
+
+        `id`: Identificador único del registro en la colección.
+
+        `name`: Nombre completo del usuario.
+
+        `email`: Correo electrónico del usurio.
+
+        `createdAt`: Fecha de registro.
+
+    Colección tasks:
+
+        `id`: Identificador único del registro dentro de la colección.
+
+        `title`: Título de la la tarea.
+
+        `description`: Descripción de la tarea(opcional).
+
+        `status`: Estado de la tarea, el estado inicial es pendiente. (Pendiente/Completada/Cancelada).
+
+        `userId`: ID del propietario (Relación).
+
+        `updatedAt`: Última modificación de la tarea.
+
+        `deletedAt`: Guarda la fecha en que la tarea fue cancela, un soft delete.
+
+# Enpoints y funcionalidades de la API
 
 1. Autenticación y gestión de usuarios  
     Endpoints para la gestión y validación de usuarios.
@@ -115,9 +170,13 @@ Las validaciones se aplican en la capa de aplicación antes de ejecutar la lógi
 # Seguridad y control de acceso
   El acceso a los recursos está protegido mediante un flujo de identidad basado en memoria y validación de cabeceras:
 
-- Validación de resión: Se utiliza un Set en memoria para gestionar los usuarios con sesión activa.
+- Consulta y validación del usuario por medio del email.
 
-- Protección de rutas: Middleware especializado que exige y valida las cabeceras:
+- Validación de sesión: Se utiliza un Set en memoria para gestionar los usuarios con sesión activa.
+
+- Validación de los datos de entrada.
+
+- Protección de rutas: Middleware de autenticación que exige y valida las cabeceras:
 
         x-user-email: Email del usuario autenticado.
 
@@ -148,28 +207,6 @@ La identificación del usuario se maneja mediante headers personalizados (`x-use
 
 - API RESTful
 Se diseñó la API siguiendo principios REST, utilizando verbos HTTP adecuados y rutas semánticas para mejorar la claridad, el consumo y la escalabilidad del sistema
-
-
-# Stack Tecnológico
-
-- Lenguaje y Entorno
-  **Node.js**: Entorno de ejecución del backend.
-  **TypeScript**: Tipado estático para mayor robustez, mantenibilidad y escalabilidad del código.
-
-- Framework y Servidor
-  **Express 5**: Framework HTTP ligero para la construcción de la API REST.
-
-- Validación y Utilidades
-  **Joi**: Validación de datos de entrada para garantizar integridad y consistencia.
-  **UUID**: Generación de identificadores únicos para entidades del dominio.
-
-- Seguridad y Middleware
-  **CORS**: Configuración de políticas de acceso entre dominios.
-  **Express Rate Limit**: Mitigar ataques de fuerza bruta y asegurar que los recursos de Firestore se utilicen de manera eficiente, evitando costos inesperados o denegación de servicio
-
-# Persistencia y Servicios Externos
-- **Firebase Functions**: Soporte para ejecución en entornos serverless.
-- ** Firebase Firestore**: Permite guardar y persistir la información
 
 # Configuración del Proyecto
 - Clonar el repositorio
