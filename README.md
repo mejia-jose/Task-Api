@@ -73,8 +73,8 @@ Este repositorio contiene el el backend de gestión de tareas, autenticación y 
     | Recurso     | Acción          | Endpoint en local  | Endpoint en producción(Cloud Functions) | Descripción del endpoint
     | :--------   | :-------------- | :----------------- | :-------------------------------------- | :----------------------
     | **Usuario** | Crear           | `POST /user`       | `POST /api/user`                        | Permite registrar un nuevo usuario
-    | **Auth**    | Iniciar sessión | `POST /auth/login` | `POST /api/auth/login`                  | Crea una tarea
-    | **Auth**    | Cerrar sessión  | `POST /auth/logout`| `POST /api/auth/logout`                 | Actualiza una tarea
+    | **Auth**    | Iniciar sessión | `POST /auth/login` | `POST /api/auth/login`                  | Iniciar sessión
+    | **Auth**    | Cerrar sessión  | `POST /auth/logout`| `POST /api/auth/logout`                 | Cerrar sessión
 
     La identidad del usuario se maneja mediante headers personalizados:
     - 'x-user-email'
