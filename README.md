@@ -92,13 +92,13 @@ Este repositorio contiene el el backend de gestión de tareas, autenticación y 
     | **Tareas** | Crear         | `POST /tasks`     | `POST /api/tasks`                              | Crea una tarea
     | **Tareas** | Actualizar    | `PATCH /tasks`    | `PATCH /api/tasks`                             | Actualiza una tarea
     | **Tareas** | Eliminar      | `PATCH /tasks/:taskId/cancel` | `PATCH /api/tasks/:taskId/cancel`  | Aplica borrado lógico cambiando el estado a Cancelada
-    | **Tareas** | Completar     | `PATCH /tasks/:taskId/complete` | `PATCH /api/tasks/:taskId/complete` |
+    | **Tareas** | Completar     | `PATCH /tasks/:taskId/complete` | `PATCH /api/tasks/:taskId/complete` | Cambiar el estado de una tarea a Completada
 
 3. Validación de datos  
     Se implementan validaciones de entrada para garantizar la integridad de la información antes de procesarla.
 
     **Ejemplos de validaciones:**
-    - Campos obligatorios (título de la tarea, email, contraseña).
+    - Campos obligatorios (título de la tarea, email, nombre).
     - Tipos de datos correctos (strings, identificadores numéricos).
     - Restricciones de longitud y formato.
     - Prevención de operaciones inválidas (editar tareas completadas).
