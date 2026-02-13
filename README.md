@@ -89,7 +89,7 @@ Este repositorio contiene el el backend de gestión de tareas, autenticación y 
     | Recurso    | Acción         | Endpoint en local | Endpoint en producción(Cloud Functions)       | Descripción del endpoint
     | :------    | :------------- | :---------------- | :-------------------------------------------- | :----------------------
     | **Tareas** | Listar tareas | `GET /tasks`      | `GET /api/tasks`                               | Lista las tareas del usuario autenticado
-    | **Tareas** | Crear         | `POST /tasks`     | `POST /api/tasks`                              | Crea una tarea
+    | **Tareas** | Crear         | `POST /tasks`     | `POST /api/tasks`                              | Crea una tarea, yb por defecto esta queda con el estado en Pendiente
     | **Tareas** | Actualizar    | `PATCH /tasks`    | `PATCH /api/tasks`                             | Actualiza una tarea
     | **Tareas** | Eliminar      | `PATCH /tasks/:taskId/cancel` | `PATCH /api/tasks/:taskId/cancel`  | Aplica borrado lógico cambiando el estado a Cancelada
     | **Tareas** | Completar     | `PATCH /tasks/:taskId/complete` | `PATCH /api/tasks/:taskId/complete` | Cambiar el estado de una tarea a Completada
@@ -152,19 +152,19 @@ Las validaciones se aplican en la capa de aplicación antes de ejecutar la lógi
     └── main.ts                 # Punto de entrada de la aplicación
 
 - ¿Por qué se decidió usar esta arquitectura?
-- Escalabilidad
+- Escalabilidad: 
     Permite agregar nuevas funcionalidades sin afectar módulos existentes, facilitando el crecimiento del API.
 
-- Mantenibilidad
+- Mantenibilidad: 
     Al estar el código modularizado, es más fácil de entender, modificar y depurar.
 
-- Separación de responsabilidades
+- Separación de responsabilidades: 
     Cada módulo es responsable de su propio dominio, reduciendo el acoplamiento entre distintas partes de la aplicación.
 
-- Mejor experiencia para el desarrollador
+- Mejor experiencia para el desarrollador: 
     Facilita la compresión y entendimiento del proyecto de forma más rapida para los desarrolladores.
 
-- Facilidad de testear
+- Facilidad de testear:
     Facilita mejor la forma de hacer pruebas y debug
 
 # Seguridad y control de acceso
@@ -196,28 +196,28 @@ Las validaciones se aplican en la capa de aplicación antes de ejecutar la lógi
 - Arquitectura Hexagonal (Ports & Adapters)
 Se adoptó la Arquitectura Hexagonal para aislar la lógica de negocio de los detalles de infraestructura, facilitando el mantenimiento, las pruebas y la evolución la API.
 
-- Modular
+- Modular: 
 Las funcionalidades se agrupan por dominios (tasks, users, etc.), permitiendo que cada módulo tenga unicamente una sola responsabilida.
 
-- Soft Delete para Cancelación de Tareas
+- Soft Delete para Cancelación de Tareas: 
 Las tareas canceladas no se eliminan físicamente de la base de datos. En su lugar, se aplica un **borrado lógico (soft delete)** para preservar la trazabilidad y consistencia de la información.
 
-- Uso de Headers para Identidad de Usuario
+- Uso de Headers para Identidad de Usuario: 
 La identificación del usuario se maneja mediante headers personalizados (`x-user-id`, `x-user-email`).
 
-- API RESTful
+- API RESTful: 
 Se diseñó la API siguiendo principios REST, utilizando verbos HTTP adecuados y rutas semánticas para mejorar la claridad, el consumo y la escalabilidad del sistema
 
 # Configuración del Proyecto
-- Clonar el repositorio
+- Clonar el repositorio:
     ```bash
         git clone https://github.com/mejia-jose/Task-Api.git
 
-- Instalar dependencias
+- Instalar dependencias:
     ```bash
         npm install
 
-- Variables de entorno
+- Variables de entorno: 
   Para que la API funcione correctamente (especialmente la conexión con Firestore), es necesario configurar un archivo .env en la raíz de la carpeta functions.
   **Nota**: El archivo .env está incluido en el .gitignore para evitar la exposición de credenciales sensibles en el repositorio.
 
